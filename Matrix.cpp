@@ -1,7 +1,5 @@
 #include "Matix.h"
 
-Matrix::Matrix() : a{} {}
-
 Matrix::Matrix(std::initializer_list<double> a, std::initializer_list<double> b, std::initializer_list<double> c)
 	: a{ { *(a.begin()), *(a.begin() + 1), *(a.begin() + 2) },{ *(b.begin()), *(b.begin() + 1), *(b.begin() + 2) },{ *(c.begin()), *(c.begin() + 1), *(c.begin() + 2) } } {}
 
@@ -48,9 +46,9 @@ Matrix Matrix::operator=(const Matrix& rhs)
 
 ostream& operator<<(ostream& out, const Matrix& m)
 {
-	out << "/ " << setw(5) << m.a[0][0] << setw(5) << m.a[0][1] << setw(5) << m.a[0][2] << setw(5) << " \\" << endl;
-	out << "| " << setw(5) << m.a[1][0] << setw(5) << m.a[1][1] << setw(5) << m.a[1][2] << setw(5) << " |" << endl;
-	out << "\\ " << setw(5) << m.a[2][0] << setw(5) << m.a[2][1] << setw(5) << m.a[2][2] << setw(5) << " /" << endl;
+	out << " / " << setw(3) << m.a[0][0] << setw(5) << m.a[0][1] << setw(5) << m.a[0][2] << setw(3) << " \\" << endl;
+	out << "( " << setw(4) << m.a[1][0] << setw(5) << m.a[1][1] << setw(5) << m.a[1][2] << setw(4) << "  )" << endl;
+	out << " \\ " << setw(3) << m.a[2][0] << setw(5) << m.a[2][1] << setw(5) << m.a[2][2] << setw(3) << " /" << endl;
 	return out;
 }
 
