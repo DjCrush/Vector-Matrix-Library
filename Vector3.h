@@ -7,7 +7,7 @@ class Vector3
 {
 	double x, y, z;
 public:
-	Vector3(double x, double y, double z);
+	Vector3(double x = 0, double y = 0, double z = 0);
 	Vector3& operator+=(const Vector3& rhs);
 	Vector3& operator-=(const Vector3& rhs);
 	Vector3 normal(); // vector normalization
