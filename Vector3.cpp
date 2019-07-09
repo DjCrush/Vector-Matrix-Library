@@ -1,6 +1,6 @@
 #include "Vector3.h"
 
-Vector3::Vector3(double x = 0, double y = 0, double z = 0) : x{ x }, y{ y }, z{ z } {}
+Vector3::Vector3(double x, double y, double z) : x{ x }, y{ y }, z{ z } {}
 
 Vector3& Vector3::operator+=(const Vector3& rhs)
 {
@@ -8,11 +8,6 @@ Vector3& Vector3::operator+=(const Vector3& rhs)
 	y += rhs.y;
 	z += rhs.z;
 	return *this;
-}
-
-Vector3 Vector3::operator-(const Vector3& rhs) // Vector subtraction
-{
-	return{ x - rhs.x, y - rhs.y, z - rhs.z };
 }
 
 Vector3& Vector3::operator-=(const Vector3& rhs)
@@ -58,9 +53,4 @@ ostream& operator<<(ostream& out, const Vector3& v)
 {
 	out << "( " << v.x << ", " << v.y << ", " << v.z << " )";
 	return out;
-}
-
-Vector3 operator*(const Vector3& lhs, const Vector3& rhs) // Cross Product
-{
-	return { lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x };
 }
