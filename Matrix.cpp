@@ -7,13 +7,6 @@ Matrix::Matrix(std::initializer_list<double> a, std::initializer_list<double> b,
 
 Matrix::Matrix(double a[][3]) : a{ { a[0][0], a[0][1], a[0][2] },{ a[1][0],a[1][1],a[1][2] }, a[2][0], a[2][1],a[2][2] } {}
 
-Matrix Matrix::operator+(const Matrix& rhs)
-{
-	return{ { a[0][0] + rhs.a[0][0], a[0][1] + rhs.a[0][1], a[0][2] + rhs.a[0][2] },
-	{ a[1][0] + rhs.a[1][0], a[1][1] + rhs.a[1][1], a[1][2] + rhs.a[1][2] },
-	{ a[2][0] + rhs.a[2][0], a[2][1] + rhs.a[2][1], a[2][2] + rhs.a[2][2] } };
-}
-
 Matrix& Matrix::operator+=(const Matrix& rhs)
 {
 	for (int i = 0; i < 3; ++i)
@@ -38,13 +31,6 @@ Matrix& Matrix::operator-=(const Matrix& rhs)
 	return *this;
 }
 
-Matrix Matrix::operator*(const double& rhs)
-{
-	return{ { a[0][0] * rhs, a[0][1] * rhs, a[0][2] * rhs },
-	{ a[1][0] * rhs, a[1][1] * rhs, a[1][2] * rhs },
-	{ a[2][0] * rhs, a[2][1] * rhs, a[2][2] * rhs } };
-}
-
 Matrix Matrix::operator=(const Matrix& rhs)
 {
 	if (this != &rhs)
@@ -60,22 +46,44 @@ Matrix Matrix::operator=(const Matrix& rhs)
 	return *this;
 }
 
-Matrix Matrix::operator*(const Matrix& rhs) // Matrix multiplication 
-{
-	return{ { a[0][0] * rhs.a[0][0] + a[0][1] * rhs.a[1][0] + a[0][2] * rhs.a[2][0], a[0][0] * rhs.a[0][1] + a[0][1] * rhs.a[1][1] + a[0][2] * rhs.a[2][1], a[0][0] * rhs.a[0][2] + a[0][1] * rhs.a[1][2] + a[0][2] * rhs.a[2][2] },
-	{ a[1][0] * rhs.a[0][0] + a[1][1] * rhs.a[1][0] + a[1][2] * rhs.a[2][0], a[1][0] * rhs.a[0][1] + a[1][1] * rhs.a[1][1] + a[1][2] * rhs.a[2][1], a[1][0] * rhs.a[0][2] + a[1][1] * rhs.a[1][2] + a[1][2] * rhs.a[2][2] },
-	{ a[2][0] * rhs.a[0][0] + a[2][1] * rhs.a[1][0] + a[2][2] * rhs.a[2][0], a[2][0] * rhs.a[0][1] + a[2][1] * rhs.a[1][1] + a[2][2] * rhs.a[2][1], a[2][0] * rhs.a[0][2] + a[2][1] * rhs.a[1][2] + a[2][2] * rhs.a[2][2] } };
-}
-
-Matrix Matrix::operator-(const Matrix& rhs)
-{
-	return{ { a[0][0] - rhs.a[0][0], a[0][1] - rhs.a[0][1], a[0][2] - rhs.a[0][2] },{ a[1][0] - rhs.a[1][0], a[1][1] - rhs.a[1][1], a[1][2] - rhs.a[1][2] },{ a[2][0] - rhs.a[2][0], a[2][1] - rhs.a[2][1], a[2][2] - rhs.a[2][2] } };
-}
-
 ostream& operator<<(ostream& out, const Matrix& m)
 {
-	out << "/ " << m.a[0][0] << ' ' << m.a[0][1] << ' ' << m.a[0][2] << " \\" << endl;
-	out << "| " << m.a[1][0] << ' ' << m.a[1][1] << ' ' << m.a[1][2] << " |" << endl;
-	out << "\\ " << m.a[2][0] << ' ' << m.a[2][1] << ' ' << m.a[2][2] << " /" << endl;
+	out << "/ " << setw(5) << m.a[0][0] << setw(5) << m.a[0][1] << setw(5) << m.a[0][2] << setw(5) << " \\" << endl;
+	out << "| " << setw(5) << m.a[1][0] << setw(5) << m.a[1][1] << setw(5) << m.a[1][2] << setw(5) << " |" << endl;
+	out << "\\ " << setw(5) << m.a[2][0] << setw(5) << m.a[2][1] << setw(5) << m.a[2][2] << setw(5) << " /" << endl;
 	return out;
+}
+
+Matrix operator-(const Matrix& lhs, const Matrix& rhs)
+{
+	return{ { lhs.a[0][0] - rhs.a[0][0], lhs.a[0][1] - rhs.a[0][1], lhs.a[0][2] - rhs.a[0][2] },
+	{ lhs.a[1][0] - rhs.a[1][0], lhs.a[1][1] - rhs.a[1][1], lhs.a[1][2] - rhs.a[1][2] },
+	{ lhs.a[2][0] - rhs.a[2][0], lhs.a[2][1] - rhs.a[2][1], lhs.a[2][2] - rhs.a[2][2] } };
+}
+
+Matrix operator+(const Matrix& lhs, const Matrix& rhs)
+{
+	return{ { lhs.a[0][0] + rhs.a[0][0], lhs.a[0][1] + rhs.a[0][1], lhs.a[0][2] + rhs.a[0][2] },
+	{ lhs.a[1][0] + rhs.a[1][0], lhs.a[1][1] + rhs.a[1][1], lhs.a[1][2] + rhs.a[1][2] },
+	{ lhs.a[2][0] + rhs.a[2][0], lhs.a[2][1] + rhs.a[2][1], lhs.a[2][2] + rhs.a[2][2] } };
+}
+
+Matrix operator*(const Matrix& lhs, const double& rhs)
+{
+	return{ { lhs.a[0][0] * rhs, lhs.a[0][1] * rhs, lhs.a[0][2] * rhs },
+	{ lhs.a[1][0] * rhs, lhs.a[1][1] * rhs, lhs.a[1][2] * rhs },
+	{ lhs.a[2][0] * rhs, lhs.a[2][1] * rhs, lhs.a[2][2] * rhs } };
+}
+
+Matrix operator*(const Matrix& lhs, const Matrix& rhs) // Matrix multiplication 
+{
+	return{ { lhs.a[0][0] * rhs.a[0][0] + lhs.a[0][1] * rhs.a[1][0] + lhs.a[0][2] * rhs.a[2][0], 
+		lhs.a[0][0] * rhs.a[0][1] + lhs.a[0][1] * rhs.a[1][1] + lhs.a[0][2] * rhs.a[2][1], 
+		lhs.a[0][0] * rhs.a[0][2] + lhs.a[0][1] * rhs.a[1][2] + lhs.a[0][2] * rhs.a[2][2] },
+	{ lhs.a[1][0] * rhs.a[0][0] + lhs.a[1][1] * rhs.a[1][0] + lhs.a[1][2] * rhs.a[2][0], 
+		lhs.a[1][0] * rhs.a[0][1] + lhs.a[1][1] * rhs.a[1][1] + lhs.a[1][2] * rhs.a[2][1], 
+		lhs.a[1][0] * rhs.a[0][2] + lhs.a[1][1] * rhs.a[1][2] + lhs.a[1][2] * rhs.a[2][2] },
+	{ lhs.a[2][0] * rhs.a[0][0] + lhs.a[2][1] * rhs.a[1][0] + lhs.a[2][2] * rhs.a[2][0], 
+		lhs.a[2][0] * rhs.a[0][1] + lhs.a[2][1] * rhs.a[1][1] + lhs.a[2][2] * rhs.a[2][1], 
+		lhs.a[2][0] * rhs.a[0][2] + lhs.a[2][1] * rhs.a[1][2] + lhs.a[2][2] * rhs.a[2][2] } };
 }
